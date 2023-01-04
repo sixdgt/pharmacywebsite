@@ -30,8 +30,11 @@ Register
                             <label for="password">Password</label>
                             <input type="password" name="password" class="form-control">
                         </div>
-                        <input type="submit" class="btn btn-primary col-12" value="LOGIN">
+                        <input type="submit" class="btn btn-primary col-12" value="REGISTER">
                     </form>
+                    {% if username %}
+                    {{ username }}
+                    {% endif %}
                 </div>
             </div>
         </div>
