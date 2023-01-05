@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.contrib import messages
 
 # Create your views here.
 class LoginView(View):
@@ -13,7 +14,8 @@ class LoginView(View):
         req_password = request.POST.get('password')
 
         if req_username and req_password:
-            auth.authenticate(username=req_username, password=req_password)
+            user = auth.authenticate(username=req_username, password=req_password)
+            auth.login(request, user)
             return redirect('medicines')
         return redirect("login")
 
@@ -25,8 +27,23 @@ class RegisterView(View):
         req_email = request.POST.get('email')
         req_password = request.POST.get('password')
         req_username = request.POST.get('username')
-        user = User.objects.create_user(email=req_email, username=req_username)
-        user.set_password(req_password)
-        user.is_active = False
-        user.save()
+        
+        if not req_username:
+            messages.error(request, 'Username field is required')
+            return redirect('register')
+
+        user = User.objects.filter(username=req_username).exists()
+        if not user:
+            user = User.objects.filter(email=req_email)
+            if not user:
+                user = User.objects.create_user(email=req_email, username=req_username)
+                user.set_password(req_password)
+                user.is_active = False
+                user.save()
+                return render(request, 'authentication/register.html')
+            messages.error(request, 'Email already taken, try another')
+            return render(request, 'authentication/register.html') 
+        messages.error(request, 'Username already taken, try another')
         return render(request, 'authentication/register.html')
+
+        
