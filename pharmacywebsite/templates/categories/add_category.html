@@ -1,18 +1,17 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %}
-Medicine
+Category
 {% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    {% include 'partials/_message.html' %}
     <div class="card">
         <div class="card-header">
-            <h2>Add Medicine</h2>
+            <h2>Add Category</h2>
         </div>
         <div class="card-body">
-            <form action="{% url 'add-medicine' %}" method="post">
+            <form action="{% url 'add-category' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="submit" class="btn btn-primary col-12" value="Add">
