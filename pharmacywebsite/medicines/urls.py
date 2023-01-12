@@ -4,6 +4,9 @@ from . import views
 urlpatterns = [
     path('medicines/', views.medicine_index, name='medicines'),
     path('add-medicine/', views.medicine_create, name='add-medicine'),
+    path('edit-medicine/<int:id>', views.medicine_edit, name='edit-medicine'),
+    path('show-medicine/<int:id>', views.medicine_show, name='show-medicine'),
+    path('delete-medicine/<int:id>', views.medicine_delete, name='delete-medicine'),
 
     # categories
     path('add-category/', views.category_create, name='add-category'),
