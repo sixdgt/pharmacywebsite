@@ -7,6 +7,7 @@ class Category(models.Model):
 
     class Meta:
         db_table = "app_categories"
+        verbose_name = "Category"
     
     def __str__(self):
         return self.category
@@ -24,3 +25,6 @@ class Medicine(models.Model):
 
     class Meta:
         db_table = "app_medicines"
+    
+    def __str__(self):
+        return self.name
